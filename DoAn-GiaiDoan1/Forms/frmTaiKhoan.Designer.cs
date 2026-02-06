@@ -1,0 +1,134 @@
+﻿namespace DoAn_GiaiDoan1.Forms
+{
+    partial class frmTaiKhoan
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            label1 = new Label();
+            label2 = new Label();
+            label3 = new Label();
+            txtTenDangNhap = new TextBox();
+            txtMatKhau = new TextBox();
+            btnDangNhap = new Button();
+            btnThoat = new Button();
+            SuspendLayout();
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Times New Roman", 12.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Location = new Point(79, 101);
+            label1.Name = "label1";
+            label1.Size = new Size(117, 19);
+            label1.TabIndex = 0;
+            label1.Text = "Tên Đăng Nhập:";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Times New Roman", 12.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.Location = new Point(79, 154);
+            label2.Name = "label2";
+            label2.Size = new Size(80, 19);
+            label2.TabIndex = 1;
+            label2.Text = "Mật Khẩu:";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3.Location = new Point(194, 30);
+            label3.Name = "label3";
+            label3.Size = new Size(147, 31);
+            label3.TabIndex = 2;
+            label3.Text = "Đăng Nhập";
+            // 
+            // txtTenDangNhap
+            // 
+            txtTenDangNhap.Location = new Point(231, 94);
+            txtTenDangNhap.Name = "txtTenDangNhap";
+            txtTenDangNhap.Size = new Size(226, 26);
+            txtTenDangNhap.TabIndex = 3;
+            // 
+            // txtMatKhau
+            // 
+            txtMatKhau.Location = new Point(231, 147);
+            txtMatKhau.Name = "txtMatKhau";
+            txtMatKhau.PasswordChar = '*';
+            txtMatKhau.Size = new Size(226, 26);
+            txtMatKhau.TabIndex = 4;
+            // 
+            // btnDangNhap
+            // 
+            btnDangNhap.Location = new Point(167, 208);
+            btnDangNhap.Name = "btnDangNhap";
+            btnDangNhap.Size = new Size(85, 39);
+            btnDangNhap.TabIndex = 5;
+            btnDangNhap.Text = "Đăng nhập";
+            btnDangNhap.UseVisualStyleBackColor = true;
+            // 
+            // btnThoat
+            // 
+            btnThoat.Location = new Point(287, 208);
+            btnThoat.Name = "btnThoat";
+            btnThoat.Size = new Size(85, 39);
+            btnThoat.TabIndex = 6;
+            btnThoat.Text = "Thoát";
+            btnThoat.UseVisualStyleBackColor = true;
+            // 
+            // frmTaiKhoan
+            // 
+            AutoScaleDimensions = new SizeF(9F, 19F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.LightSlateGray;
+            ClientSize = new Size(497, 291);
+            Controls.Add(btnThoat);
+            Controls.Add(btnDangNhap);
+            Controls.Add(txtMatKhau);
+            Controls.Add(txtTenDangNhap);
+            Controls.Add(label3);
+            Controls.Add(label2);
+            Controls.Add(label1);
+            Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Margin = new Padding(4, 4, 4, 4);
+            Name = "frmTaiKhoan";
+            Text = "frmTaiKhoan";
+            ResumeLayout(false);
+            PerformLayout();
+        }
+
+        #endregion
+
+        private Label label1;
+        private Label label2;
+        private Label label3;
+        private TextBox txtTenDangNhap;
+        private TextBox txtMatKhau;
+        private Button btnDangNhap;
+        private Button btnThoat;
+    }
+}

@@ -1,4 +1,5 @@
 ﻿using DoAn_GiaiDoan1.Data;
+using QuanLyBanHang.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,6 +22,7 @@ namespace DoAn_GiaiDoan1.Forms
         QLQKOKDbContext context = new QLQKOKDbContext();
         bool xulyThem = false;
         int id;
+        string imagesFolder = Application.StartupPath.Replace("bin\\Debug\\net5.0-windows", "Images");
         private void BatTatChucNang(bool giaTri)
         {
             btnLuu.Enabled = giaTri;
@@ -35,28 +37,6 @@ namespace DoAn_GiaiDoan1.Forms
             btnXoa.Enabled = !giaTri;
         }
 
-        /* private void frmPhong_Load(object sender, EventArgs e)
-         {
-             BatTatChucNang(false);
-             List<Phong> p = new List<Phong>();
-             p = context.Phong.ToList();
-
-             BindingSource bindingSource = new BindingSource();
-             bindingSource.DataSource = p;
-
-             txtTenPhong.DataBindings.Clear();
-             txtTenPhong.DataBindings.Add("Text", bindingSource, "TenPhong", false, DataSourceUpdateMode.Never);
-             txtGiaGio.DataBindings.Clear();
-             txtGiaGio.DataBindings.Add("Text", bindingSource, "GiaGio", false, DataSourceUpdateMode.Never);
-             cbLoaiPhong.DataSource = context.LoaiPhong.ToList();
-             cbLoaiPhong.DisplayMember = "TenLoaiPhong";
-             cbLoaiPhong.ValueMember = "ID";
-             cbLoaiPhong.SelectedIndex = -1;
-
-
-             dataGridView1.DataSource = bindingSource;
-         }*/
-
         private void btnThem_Click(object sender, EventArgs e)
         {
             xulyThem = true;
@@ -67,13 +47,14 @@ namespace DoAn_GiaiDoan1.Forms
             rdbTrong.Checked = false;
             rdbĐangDung.Checked = false;
             rdbBaoTri.Checked = false;
+            picHinhAnh.Image = null;
         }
 
         private void btnSua_Click(object sender, EventArgs e)
         {
             xulyThem = false;
             BatTatChucNang(true);
-            id = Convert.ToInt32(dataGridView1.CurrentRow.Cells["ID"].Value.ToString());
+            id = Convert.ToInt32(dataGridView1.CurrentRow.Cells["IDPhong"].Value.ToString());
         }
 
         private void btnLuu_Click(object sender, EventArgs e)
@@ -102,6 +83,7 @@ namespace DoAn_GiaiDoan1.Forms
                     p.GiaGio = giaGio;
                     p.TrangThai = trangThai;
                     p.LoaiPhongID = (int)cbLoaiPhong.SelectedValue;
+                    
 
                     context.Phong.Add(p);
                     context.SaveChanges();
@@ -151,14 +133,22 @@ namespace DoAn_GiaiDoan1.Forms
         private void frmPhong_Load_1(object sender, EventArgs e)
         {
             BatTatChucNang(false);
-
+            dataGridView1.AutoGenerateColumns = false;
 
 
             List<Phong> p = new List<Phong>();
-            p = context.Phong.ToList();
-
+            /*p = context.Phong.Select(r => new Phong
+            {
+                ID= r.ID,
+                TenPhong = r.TenPhong,
+                GiaGio = r.GiaGio,
+                LoaiPhong = r.LoaiPhong.TenLoaiPhong,
+                LoaiPhongID = r.LoaiPhongID,
+                TrangThai = r.TrangThai,
+                HinhAnh = r.HinhAnh
+            }).ToList();
             BindingSource bindingSource = new BindingSource();
-            bindingSource.DataSource = p;
+            bindingSource.DataSource = p*/
             var dsPhong = from ph in context.Phong
                           join lp in context.LoaiPhong
                           on ph.LoaiPhongID equals lp.ID
@@ -167,29 +157,38 @@ namespace DoAn_GiaiDoan1.Forms
                               ph.ID,
                               ph.TenPhong,
                               ph.GiaGio,
-                              LoaiPhong = lp.TenLoaiPhong, 
+                              LoaiPhong = lp.TenLoaiPhong,
                               ph.LoaiPhongID,
-                              TrangThai = ph.TrangThai
+                              TrangThai = ph.TrangThai,
+                              ph.HinhAnh 
+                  
                           };
 
-            dataGridView1.AutoGenerateColumns = false;
-            dataGridView1.DataSource = dsPhong.ToList();
-
-
+            BindingSource bs = new BindingSource();
+            bs.DataSource = dsPhong.ToList();
+            dataGridView1.DataSource = bs;
+           /* BindingSource bindingSource = new BindingSource();
+            bindingSource.DataSource = p;*/
             txtTenPhong.DataBindings.Clear();
-            txtTenPhong.DataBindings.Add("Text", bindingSource, "TenPhong", false, DataSourceUpdateMode.Never);
+            txtTenPhong.DataBindings.Add("Text", bs, "TenPhong", false, DataSourceUpdateMode.Never);
             txtGiaGio.DataBindings.Clear();
-            txtGiaGio.DataBindings.Add("Text", bindingSource, "GiaGio", false, DataSourceUpdateMode.Never);
+            txtGiaGio.DataBindings.Add("Text", bs, "GiaGio", false, DataSourceUpdateMode.Never);
             cbLoaiPhong.DataSource = context.LoaiPhong.ToList();
             cbLoaiPhong.DisplayMember = "TenLoaiPhong";
             cbLoaiPhong.ValueMember = "ID";
             cbLoaiPhong.SelectedIndex = -1;
-            
 
-            dataGridView1.AutoGenerateColumns = false;
-          
+            picHinhAnh.DataBindings.Clear();
+            Binding imgBind = new Binding("ImageLocation", bs, "HinhAnh");
+            imgBind.Format += (s, e2) =>
+            {
+                if (e2.Value != null)
+                    e2.Value = Path.Combine(imagesFolder, e2.Value.ToString());
+            };
+            picHinhAnh.DataBindings.Add(imgBind);
 
-           
+// dataGridView1.DataSource = bindingSource;
+
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -211,6 +210,41 @@ namespace DoAn_GiaiDoan1.Forms
                 rdbTrong.Checked = trangThai == "Trống";
                 rdbĐangDung.Checked = trangThai == "Đang dùng";
                 rdbBaoTri.Checked = trangThai == "Bảo trì";
+            }
+        }
+
+        private void dataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "HinhAnh")
+            {
+                Image image = Image.FromFile(Path.Combine(imagesFolder, e.Value.ToString()));
+                image = new Bitmap(image, 24, 24);
+                e.Value = image;
+            }
+
+
+        }
+       
+
+        private void btnDoiAnh_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Title = "Cập nhật hình ảnh sản phẩm";
+            openFileDialog.Filter = "Tập tin hình ảnh|*.jpg;*.jpeg;*.png;*.gif;*.bmp";
+            openFileDialog.Multiselect = false;
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string fileName = Path.GetFileNameWithoutExtension(openFileDialog.FileName);
+                string ext = Path.GetExtension(openFileDialog.FileName);
+                string fileSavePath = Path.Combine(imagesFolder, fileName.GenerateSlug() + ext);
+                File.Copy(openFileDialog.FileName, fileSavePath, true);
+                id = Convert.ToInt32(dataGridView1.CurrentRow.Cells["IDPhong"].Value.ToString());
+                Phong p = context.Phong.Find(id);
+                p.HinhAnh = fileName.GenerateSlug() + ext;
+                context.Phong.Update(p);
+                context.SaveChanges();
+                frmPhong_Load_1(sender, e);
             }
         }
     }

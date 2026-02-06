@@ -17,6 +17,6 @@ namespace DoAn_GiaiDoan1.Data
         public virtual ObservableCollectionListSource<HoaDon> HoaDon { get; } = new();
         public virtual ObservableCollectionListSource<PhanCong> PhanCong { get; } = new();
 
-
+        public TaiKhoan TaiKhoan { get; set; }
     }
 }

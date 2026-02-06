@@ -14,7 +14,9 @@ namespace DoAn_GiaiDoan1.Data
         public int LoaiPhongID { get; set; }
         public decimal GiaGio { get; set; }
         public string TrangThai { get; set; }
-        
+        public string? HinhAnh { get; set; }
+
+
         public virtual ObservableCollectionListSource<HoaDon> HoaDon { get; } = new();
         public virtual ObservableCollectionListSource<DatPhong> DatPhong { get; } = new();
         public virtual LoaiPhong LoaiPhong { get; set; } = null!;

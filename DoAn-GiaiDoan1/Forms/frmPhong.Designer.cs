@@ -41,6 +41,12 @@
             txtTenPhong = new TextBox();
             label1 = new Label();
             groupBox1 = new GroupBox();
+            btnNhap = new Button();
+            btnTimKiem = new Button();
+            btnXoay = new Button();
+            btnDoiAnh = new Button();
+            btnThemAnh = new Button();
+            picHinhAnh = new PictureBox();
             groupBox3 = new GroupBox();
             rdbBaoTri = new RadioButton();
             rdbĐangDung = new RadioButton();
@@ -52,9 +58,11 @@
             GiaGio = new DataGridViewTextBoxColumn();
             LoaiPhong = new DataGridViewTextBoxColumn();
             TrangThai = new DataGridViewTextBoxColumn();
+            HinhAnh = new DataGridViewTextBoxColumn();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picHinhAnh).BeginInit();
             groupBox3.SuspendLayout();
             SuspendLayout();
             // 
@@ -62,9 +70,9 @@
             // 
             groupBox2.Controls.Add(dataGridView1);
             groupBox2.Font = new Font("Times New Roman", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            groupBox2.Location = new Point(18, 260);
+            groupBox2.Location = new Point(18, 305);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(967, 294);
+            groupBox2.Size = new Size(967, 249);
             groupBox2.TabIndex = 8;
             groupBox2.TabStop = false;
             groupBox2.Text = "Danh sách phòng";
@@ -75,12 +83,12 @@
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { IDPhong, TenPhong, GiaGio, LoaiPhong, TrangThai });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { IDPhong, TenPhong, GiaGio, LoaiPhong, TrangThai, HinhAnh });
             dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.Location = new Point(3, 22);
             dataGridView1.MultiSelect = false;
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(961, 269);
+            dataGridView1.Size = new Size(961, 224);
             dataGridView1.TabIndex = 1;
             // 
             // label3
@@ -117,10 +125,10 @@
             // btnSua
             // 
             btnSua.BackColor = Color.White;
-            btnSua.Location = new Point(621, 82);
+            btnSua.Location = new Point(193, 240);
             btnSua.Margin = new Padding(4);
             btnSua.Name = "btnSua";
-            btnSua.Size = new Size(134, 48);
+            btnSua.Size = new Size(114, 34);
             btnSua.TabIndex = 7;
             btnSua.Text = "Sửa";
             btnSua.UseVisualStyleBackColor = false;
@@ -129,10 +137,10 @@
             // btnHuy
             // 
             btnHuy.BackColor = Color.White;
-            btnHuy.Location = new Point(788, 82);
+            btnHuy.Location = new Point(668, 240);
             btnHuy.Margin = new Padding(4);
             btnHuy.Name = "btnHuy";
-            btnHuy.Size = new Size(134, 48);
+            btnHuy.Size = new Size(122, 34);
             btnHuy.TabIndex = 6;
             btnHuy.Text = "Huỷ bỏ";
             btnHuy.UseVisualStyleBackColor = false;
@@ -141,10 +149,10 @@
             // btnThoat
             // 
             btnThoat.BackColor = Color.White;
-            btnThoat.Location = new Point(788, 151);
+            btnThoat.Location = new Point(827, 240);
             btnThoat.Margin = new Padding(4);
             btnThoat.Name = "btnThoat";
-            btnThoat.Size = new Size(134, 48);
+            btnThoat.Size = new Size(118, 34);
             btnThoat.TabIndex = 5;
             btnThoat.Text = "Thoát";
             btnThoat.UseVisualStyleBackColor = false;
@@ -154,10 +162,10 @@
             // 
             btnLuu.BackColor = Color.Khaki;
             btnLuu.ForeColor = Color.Red;
-            btnLuu.Location = new Point(621, 151);
+            btnLuu.Location = new Point(342, 240);
             btnLuu.Margin = new Padding(4);
             btnLuu.Name = "btnLuu";
-            btnLuu.Size = new Size(134, 48);
+            btnLuu.Size = new Size(120, 34);
             btnLuu.TabIndex = 4;
             btnLuu.Text = "Lưu";
             btnLuu.UseVisualStyleBackColor = false;
@@ -167,10 +175,10 @@
             // 
             btnXoa.BackColor = Color.Khaki;
             btnXoa.ForeColor = Color.Red;
-            btnXoa.Location = new Point(788, 19);
+            btnXoa.Location = new Point(503, 240);
             btnXoa.Margin = new Padding(4);
             btnXoa.Name = "btnXoa";
-            btnXoa.Size = new Size(134, 48);
+            btnXoa.Size = new Size(124, 34);
             btnXoa.TabIndex = 3;
             btnXoa.Text = "Xoá";
             btnXoa.UseVisualStyleBackColor = false;
@@ -198,6 +206,12 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(btnNhap);
+            groupBox1.Controls.Add(btnTimKiem);
+            groupBox1.Controls.Add(btnXoay);
+            groupBox1.Controls.Add(btnDoiAnh);
+            groupBox1.Controls.Add(btnThemAnh);
+            groupBox1.Controls.Add(picHinhAnh);
             groupBox1.Controls.Add(groupBox3);
             groupBox1.Controls.Add(cbLoaiPhong);
             groupBox1.Controls.Add(label3);
@@ -216,10 +230,75 @@
             groupBox1.Margin = new Padding(4);
             groupBox1.Name = "groupBox1";
             groupBox1.Padding = new Padding(4);
-            groupBox1.Size = new Size(967, 237);
+            groupBox1.Size = new Size(967, 282);
             groupBox1.TabIndex = 7;
             groupBox1.TabStop = false;
             groupBox1.Text = "Tìm Kiếm Phòng";
+            // 
+            // btnNhap
+            // 
+            btnNhap.BackColor = Color.White;
+            btnNhap.Location = new Point(789, 198);
+            btnNhap.Margin = new Padding(4);
+            btnNhap.Name = "btnNhap";
+            btnNhap.Size = new Size(118, 34);
+            btnNhap.TabIndex = 20;
+            btnNhap.Text = "Nhập";
+            btnNhap.UseVisualStyleBackColor = false;
+            // 
+            // btnTimKiem
+            // 
+            btnTimKiem.BackColor = Color.White;
+            btnTimKiem.Location = new Point(630, 198);
+            btnTimKiem.Margin = new Padding(4);
+            btnTimKiem.Name = "btnTimKiem";
+            btnTimKiem.Size = new Size(118, 34);
+            btnTimKiem.TabIndex = 19;
+            btnTimKiem.Text = "Tìm Kiếm";
+            btnTimKiem.UseVisualStyleBackColor = false;
+            // 
+            // btnXoay
+            // 
+            btnXoay.BackColor = Color.White;
+            btnXoay.Location = new Point(827, 136);
+            btnXoay.Margin = new Padding(4);
+            btnXoay.Name = "btnXoay";
+            btnXoay.Size = new Size(118, 34);
+            btnXoay.TabIndex = 18;
+            btnXoay.Text = "Xoay ảnh";
+            btnXoay.UseVisualStyleBackColor = false;
+            // 
+            // btnDoiAnh
+            // 
+            btnDoiAnh.BackColor = Color.White;
+            btnDoiAnh.Location = new Point(827, 30);
+            btnDoiAnh.Margin = new Padding(4);
+            btnDoiAnh.Name = "btnDoiAnh";
+            btnDoiAnh.Size = new Size(118, 34);
+            btnDoiAnh.TabIndex = 17;
+            btnDoiAnh.Text = "Đổi ảnh";
+            btnDoiAnh.UseVisualStyleBackColor = false;
+            btnDoiAnh.Click += btnDoiAnh_Click;
+            // 
+            // btnThemAnh
+            // 
+            btnThemAnh.BackColor = Color.White;
+            btnThemAnh.Location = new Point(827, 80);
+            btnThemAnh.Margin = new Padding(4);
+            btnThemAnh.Name = "btnThemAnh";
+            btnThemAnh.Size = new Size(118, 34);
+            btnThemAnh.TabIndex = 16;
+            btnThemAnh.Text = "Thêm ảnh";
+            btnThemAnh.UseVisualStyleBackColor = false;
+            // 
+            // picHinhAnh
+            // 
+            picHinhAnh.Location = new Point(630, 26);
+            picHinhAnh.Name = "picHinhAnh";
+            picHinhAnh.Size = new Size(160, 153);
+            picHinhAnh.SizeMode = PictureBoxSizeMode.StretchImage;
+            picHinhAnh.TabIndex = 15;
+            picHinhAnh.TabStop = false;
             // 
             // groupBox3
             // 
@@ -277,10 +356,10 @@
             // btnThem
             // 
             btnThem.BackColor = Color.White;
-            btnThem.Location = new Point(621, 19);
+            btnThem.Location = new Point(36, 240);
             btnThem.Margin = new Padding(4);
             btnThem.Name = "btnThem";
-            btnThem.Size = new Size(134, 48);
+            btnThem.Size = new Size(114, 34);
             btnThem.TabIndex = 2;
             btnThem.Text = "Thêm";
             btnThem.UseVisualStyleBackColor = false;
@@ -316,6 +395,14 @@
             TrangThai.HeaderText = "Trạng Thái";
             TrangThai.Name = "TrangThai";
             // 
+            // HinhAnh
+            // 
+            HinhAnh.DataPropertyName = "HinhAnh";
+            HinhAnh.HeaderText = "Hình Ảnh";
+            HinhAnh.Name = "HinhAnh";
+            HinhAnh.Resizable = DataGridViewTriState.True;
+            HinhAnh.SortMode = DataGridViewColumnSortMode.NotSortable;
+            // 
             // frmPhong
             // 
             AutoScaleDimensions = new SizeF(9F, 19F);
@@ -333,6 +420,7 @@
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)picHinhAnh).EndInit();
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
             ResumeLayout(false);
@@ -359,10 +447,17 @@
         private RadioButton rdbĐangDung;
         private RadioButton rdbTrong;
         private DataGridView dataGridView1;
+        private Button btnXoay;
+        private Button btnDoiAnh;
+        private Button btnThemAnh;
+        private PictureBox picHinhAnh;
+        private Button btnNhap;
+        private Button btnTimKiem;
         private DataGridViewTextBoxColumn IDPhong;
         private DataGridViewTextBoxColumn TenPhong;
         private DataGridViewTextBoxColumn GiaGio;
         private DataGridViewTextBoxColumn LoaiPhong;
         private DataGridViewTextBoxColumn TrangThai;
+        private DataGridViewTextBoxColumn HinhAnh;
     }
 }

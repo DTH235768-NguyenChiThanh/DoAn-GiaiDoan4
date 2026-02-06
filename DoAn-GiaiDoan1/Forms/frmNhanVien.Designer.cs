@@ -30,6 +30,9 @@
         {
             label3 = new Label();
             groupBox1 = new GroupBox();
+            groupBox3 = new GroupBox();
+            rdbNam = new RadioButton();
+            rdbNu = new RadioButton();
             txtSDT = new TextBox();
             txtChucVu = new TextBox();
             label2 = new Label();
@@ -48,13 +51,10 @@
             SDT = new DataGridViewTextBoxColumn();
             groupBox2 = new GroupBox();
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            groupBox3 = new GroupBox();
-            rdbNu = new RadioButton();
-            rdbNam = new RadioButton();
             groupBox1.SuspendLayout();
+            groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             groupBox2.SuspendLayout();
-            groupBox3.SuspendLayout();
             SuspendLayout();
             // 
             // label3
@@ -91,7 +91,40 @@
             groupBox1.Size = new Size(967, 224);
             groupBox1.TabIndex = 5;
             groupBox1.TabStop = false;
-            groupBox1.Text = "Tìm Kiếm Dịch Vụ";
+            groupBox1.Text = "Thông Tin Nhân Viên";
+            // 
+            // groupBox3
+            // 
+            groupBox3.Controls.Add(rdbNam);
+            groupBox3.Controls.Add(rdbNu);
+            groupBox3.Location = new Point(89, 150);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Size = new Size(439, 67);
+            groupBox3.TabIndex = 12;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "Giới Tính";
+            // 
+            // rdbNam
+            // 
+            rdbNam.AutoSize = true;
+            rdbNam.Location = new Point(59, 26);
+            rdbNam.Name = "rdbNam";
+            rdbNam.Size = new Size(59, 23);
+            rdbNam.TabIndex = 1;
+            rdbNam.TabStop = true;
+            rdbNam.Text = "Nam";
+            rdbNam.UseVisualStyleBackColor = true;
+            // 
+            // rdbNu
+            // 
+            rdbNu.AutoSize = true;
+            rdbNu.Location = new Point(253, 26);
+            rdbNu.Name = "rdbNu";
+            rdbNu.Size = new Size(49, 23);
+            rdbNu.TabIndex = 0;
+            rdbNu.TabStop = true;
+            rdbNu.Text = "Nữ";
+            rdbNu.UseVisualStyleBackColor = true;
             // 
             // txtSDT
             // 
@@ -265,39 +298,6 @@
             groupBox2.TabStop = false;
             groupBox2.Text = "Danh sách nhân viên";
             // 
-            // groupBox3
-            // 
-            groupBox3.Controls.Add(rdbNam);
-            groupBox3.Controls.Add(rdbNu);
-            groupBox3.Location = new Point(89, 150);
-            groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(439, 67);
-            groupBox3.TabIndex = 12;
-            groupBox3.TabStop = false;
-            groupBox3.Text = "Giới Tính";
-            // 
-            // rdbNu
-            // 
-            rdbNu.AutoSize = true;
-            rdbNu.Location = new Point(253, 26);
-            rdbNu.Name = "rdbNu";
-            rdbNu.Size = new Size(49, 23);
-            rdbNu.TabIndex = 0;
-            rdbNu.TabStop = true;
-            rdbNu.Text = "Nữ";
-            rdbNu.UseVisualStyleBackColor = true;
-            // 
-            // rdbNam
-            // 
-            rdbNam.AutoSize = true;
-            rdbNam.Location = new Point(59, 26);
-            rdbNam.Name = "rdbNam";
-            rdbNam.Size = new Size(59, 23);
-            rdbNam.TabIndex = 1;
-            rdbNam.TabStop = true;
-            rdbNam.Text = "Nam";
-            rdbNam.UseVisualStyleBackColor = true;
-            // 
             // frmNhanVien
             // 
             AutoScaleDimensions = new SizeF(9F, 19F);
@@ -313,10 +313,10 @@
             Load += frmNhanVien_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
-            groupBox2.ResumeLayout(false);
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            groupBox2.ResumeLayout(false);
             ResumeLayout(false);
         }
 
