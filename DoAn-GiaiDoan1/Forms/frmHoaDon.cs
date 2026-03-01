@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DoAn_GiaiDoan1.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,10 +17,36 @@ namespace DoAn_GiaiDoan1.Forms
         {
             InitializeComponent();
         }
-
+        QLQKOKDbContext context = new QLQKOKDbContext();
+        int id;
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void frmHoaDon_Load(object sender, EventArgs e)
+        {
+            dataGridView1.AutoGenerateColumns = false;
+            List<DanhSachHoaDon> hd = new List<DanhSachHoaDon>();
+            hd = context.HoaDon.Select(r => new DanhSachHoaDon
+            {
+                ID = r.ID,
+                PhongID = r.PhongID,
+                TenPhong = r.Phong.TenPhong,
+                KHID = r.KHID,
+                HoVaTenKhachHang = r.KhachHang.TenKH,
+                NVID = r.NVID,
+                HoVaTenNhanVien = r.NhanVien.TenNV,
+                NgayLap = r.NgayLap,
+                // TongTien = r.ChiTietHoaDon.Sum(r => (r.GioRa - r.GioVao) * r.DonGia),
+                XemChiTiet = "Xem chi tiết"
+            }).ToList();
+            dataGridView1.DataSource = hd;
+        }
+
+        private void btnLapHoaDon_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

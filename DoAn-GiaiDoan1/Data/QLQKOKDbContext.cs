@@ -21,6 +21,7 @@ namespace DoAn_GiaiDoan1.Data
         public DbSet<LoaiPhong> LoaiPhong { get; set; }
         public DbSet<CaLamViec> CaLamViec { get; set; }
         public DbSet<PhanCong> PhanCong { get; set; }
+       
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

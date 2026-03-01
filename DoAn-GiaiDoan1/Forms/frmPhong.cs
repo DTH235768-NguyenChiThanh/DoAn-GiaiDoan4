@@ -22,7 +22,10 @@ namespace DoAn_GiaiDoan1.Forms
         QLQKOKDbContext context = new QLQKOKDbContext();
         bool xulyThem = false;
         int id;
-        string imagesFolder = Application.StartupPath.Replace("bin\\Debug\\net5.0-windows", "Images");
+        string imagesFolder = Path.Combine(
+    Directory.GetParent(Application.StartupPath).Parent.Parent.FullName,
+    "Images"
+);
         private void BatTatChucNang(bool giaTri)
         {
             btnLuu.Enabled = giaTri;
@@ -36,6 +39,12 @@ namespace DoAn_GiaiDoan1.Forms
             btnSua.Enabled = !giaTri;
             btnXoa.Enabled = !giaTri;
         }
+        public void LayLoaiPhong()
+        {
+            cbLoaiPhong.DataSource = context.LoaiPhong.ToList();
+            cbLoaiPhong.ValueMember = "ID";
+            cbLoaiPhong.DisplayMember = "TenLoaiPhong";
+        }
 
         private void btnThem_Click(object sender, EventArgs e)
         {
@@ -43,7 +52,7 @@ namespace DoAn_GiaiDoan1.Forms
             BatTatChucNang(true);
             txtTenPhong.Clear();
             txtGiaGio.Clear();
-            cbLoaiPhong.SelectedIndex = -1;
+            cbLoaiPhong.Text = "";
             rdbTrong.Checked = false;
             rdbĐangDung.Checked = false;
             rdbBaoTri.Checked = false;
@@ -60,9 +69,10 @@ namespace DoAn_GiaiDoan1.Forms
         private void btnLuu_Click(object sender, EventArgs e)
         {
 
-            if (string.IsNullOrWhiteSpace(txtTenPhong.Text) || string.IsNullOrWhiteSpace(txtGiaGio.Text) ||
-                cbLoaiPhong.SelectedIndex == -1 ||
-                !(rdbTrong.Checked || rdbĐangDung.Checked || rdbBaoTri.Checked))
+            if (string.IsNullOrWhiteSpace(txtTenPhong.Text) ||
+            string.IsNullOrWhiteSpace(txtGiaGio.Text) ||
+            string.IsNullOrWhiteSpace(cbLoaiPhong.Text) ||
+            !(rdbTrong.Checked || rdbĐangDung.Checked || rdbBaoTri.Checked))
 
                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin phòng ", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
@@ -83,8 +93,6 @@ namespace DoAn_GiaiDoan1.Forms
                     p.GiaGio = giaGio;
                     p.TrangThai = trangThai;
                     p.LoaiPhongID = (int)cbLoaiPhong.SelectedValue;
-                    
-
                     context.Phong.Add(p);
                     context.SaveChanges();
                 }
@@ -133,62 +141,63 @@ namespace DoAn_GiaiDoan1.Forms
         private void frmPhong_Load_1(object sender, EventArgs e)
         {
             BatTatChucNang(false);
+            LayLoaiPhong();
             dataGridView1.AutoGenerateColumns = false;
 
 
-            List<Phong> p = new List<Phong>();
-            /*p = context.Phong.Select(r => new Phong
+            List<DanhSachPhong> p = new List<DanhSachPhong>();
+            
+            p = context.Phong.Select(r=> new DanhSachPhong
             {
-                ID= r.ID,
+                ID = r.ID,
                 TenPhong = r.TenPhong,
-                GiaGio = r.GiaGio,
-                LoaiPhong = r.LoaiPhong.TenLoaiPhong,
                 LoaiPhongID = r.LoaiPhongID,
+                GiaGio = r.GiaGio,
+                TenLoaiPhong = r.LoaiPhong.TenLoaiPhong,
                 TrangThai = r.TrangThai,
-                HinhAnh = r.HinhAnh
+                //inhAnh = r.HinhAnh
+                HinhAnh = (!string.IsNullOrEmpty(r.HinhAnh) &&
+                   File.Exists(Path.Combine(imagesFolder, r.HinhAnh)))
+                   ? Image.FromFile(Path.Combine(imagesFolder, r.HinhAnh))
+                   : null
             }).ToList();
+
             BindingSource bindingSource = new BindingSource();
-            bindingSource.DataSource = p*/
-            var dsPhong = from ph in context.Phong
-                          join lp in context.LoaiPhong
-                          on ph.LoaiPhongID equals lp.ID
-                          select new
-                          {
-                              ph.ID,
-                              ph.TenPhong,
-                              ph.GiaGio,
-                              LoaiPhong = lp.TenLoaiPhong,
-                              ph.LoaiPhongID,
-                              TrangThai = ph.TrangThai,
-                              ph.HinhAnh 
-                  
-                          };
-
-            BindingSource bs = new BindingSource();
-            bs.DataSource = dsPhong.ToList();
-            dataGridView1.DataSource = bs;
-           /* BindingSource bindingSource = new BindingSource();
-            bindingSource.DataSource = p;*/
+            bindingSource.DataSource = p;
+           
             txtTenPhong.DataBindings.Clear();
-            txtTenPhong.DataBindings.Add("Text", bs, "TenPhong", false, DataSourceUpdateMode.Never);
+            txtTenPhong.DataBindings.Add("Text",bindingSource, "TenPhong", false, DataSourceUpdateMode.Never);
             txtGiaGio.DataBindings.Clear();
-            txtGiaGio.DataBindings.Add("Text", bs, "GiaGio", false, DataSourceUpdateMode.Never);
-            cbLoaiPhong.DataSource = context.LoaiPhong.ToList();
-            cbLoaiPhong.DisplayMember = "TenLoaiPhong";
-            cbLoaiPhong.ValueMember = "ID";
-            cbLoaiPhong.SelectedIndex = -1;
-
+            txtGiaGio.DataBindings.Add("Text", bindingSource, "GiaGio", true, DataSourceUpdateMode.Never);
+            cbLoaiPhong.DataBindings.Clear();
+            cbLoaiPhong.DataBindings.Add("SelectedValue", bindingSource, "LoaiPhongID", false, DataSourceUpdateMode.Never);
+           
+            
             picHinhAnh.DataBindings.Clear();
-            Binding imgBind = new Binding("ImageLocation", bs, "HinhAnh");
-            imgBind.Format += (s, e2) =>
+
+            Binding hinhAnh = new Binding("ImageLocation", bindingSource, "HinhAnh",false, DataSourceUpdateMode.Never);
+
+            hinhAnh.Format += (s, e) =>
             {
-                if (e2.Value != null)
-                    e2.Value = Path.Combine(imagesFolder, e2.Value.ToString());
+                if (e.Value != null && !string.IsNullOrEmpty(e.Value.ToString()))
+                {
+                    string fullPath = Path.Combine(imagesFolder, e.Value.ToString());
+                    if (File.Exists(fullPath))
+                        e.Value = fullPath;
+                    else
+                        e.Value = null;
+                }
+                else
+                {
+                    e.Value = null;
+                }
             };
-            picHinhAnh.DataBindings.Add(imgBind);
 
-// dataGridView1.DataSource = bindingSource;
-
+            picHinhAnh.DataBindings.Add(hinhAnh); 
+           
+           
+            //picHinhAnh.DataBindings.Add("Image", bindingSource, "HinhAnh");
+            dataGridView1.DataSource = bindingSource;
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -202,7 +211,7 @@ namespace DoAn_GiaiDoan1.Forms
                     dataGridView1.CurrentRow.Cells["GiaGio"].Value.ToString();
 
                 cbLoaiPhong.Text =
-                    dataGridView1.CurrentRow.Cells["LoaiPhong"].Value.ToString();
+                    dataGridView1.CurrentRow.Cells["TenLoaiPhong"].Value.ToString();
 
                 string trangThai =
                     dataGridView1.CurrentRow.Cells["TrangThai"].Value.ToString();
@@ -213,18 +222,36 @@ namespace DoAn_GiaiDoan1.Forms
             }
         }
 
-        private void dataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+       /*rivate void dataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
 
+            /* if (dataGridView1.Columns[e.ColumnIndex].Name == "HinhAnh")
+             {
+                 Image image = Image.FromFile(Path.Combine(imagesFolder, e.Value.ToString()));
+                 image = new Bitmap(image, 24, 24);
+                 e.Value = image;
+             }
             if (dataGridView1.Columns[e.ColumnIndex].Name == "HinhAnh")
             {
-                Image image = Image.FromFile(Path.Combine(imagesFolder, e.Value.ToString()));
-                image = new Bitmap(image, 24, 24);
-                e.Value = image;
+                if (e.Value != null)
+                {
+                    string fullPath = Path.Combine(imagesFolder, e.Value.ToString());
+
+                    if (File.Exists(fullPath))
+                    {
+                        Image image = Image.FromFile(fullPath);
+                        image = new Bitmap(image, 24, 24);
+                        e.Value = image;
+                    }
+                    else
+                    {
+                        e.Value = null;
+                    }
+                }
             }
 
 
-        }
+        }*/
        
 
         private void btnDoiAnh_Click(object sender, EventArgs e)
@@ -235,6 +262,8 @@ namespace DoAn_GiaiDoan1.Forms
             openFileDialog.Multiselect = false;
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
+                BatTatChucNang(true);
+                xulyThem = false;
                 string fileName = Path.GetFileNameWithoutExtension(openFileDialog.FileName);
                 string ext = Path.GetExtension(openFileDialog.FileName);
                 string fileSavePath = Path.Combine(imagesFolder, fileName.GenerateSlug() + ext);
@@ -244,7 +273,9 @@ namespace DoAn_GiaiDoan1.Forms
                 p.HinhAnh = fileName.GenerateSlug() + ext;
                 context.Phong.Update(p);
                 context.SaveChanges();
-                frmPhong_Load_1(sender, e);
+                frmPhong_Load_1(sender, e); 
+                picHinhAnh.ImageLocation = fileSavePath;
+
             }
         }
     }

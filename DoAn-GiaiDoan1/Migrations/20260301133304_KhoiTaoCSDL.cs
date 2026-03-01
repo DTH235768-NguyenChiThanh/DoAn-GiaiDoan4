@@ -94,7 +94,7 @@ namespace DoAn_GiaiDoan1.Migrations
                     TenPhong = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LoaiPhongID = table.Column<int>(type: "int", nullable: false),
                     GiaGio = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TrangThai = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TrangThai = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HinhAnh = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -199,8 +199,7 @@ namespace DoAn_GiaiDoan1.Migrations
                     PhongID = table.Column<int>(type: "int", nullable: false),
                     KHID = table.Column<int>(type: "int", nullable: false),
                     NVID = table.Column<int>(type: "int", nullable: false),
-                    GioVao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    GioRa = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NgayLap = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TongTien = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     KhachHangID = table.Column<int>(type: "int", nullable: false),
                     NhanVienID = table.Column<int>(type: "int", nullable: false)
@@ -236,8 +235,9 @@ namespace DoAn_GiaiDoan1.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     HoaDonID = table.Column<int>(type: "int", nullable: false),
                     DVID = table.Column<int>(type: "int", nullable: false),
-                    SoLuong = table.Column<int>(type: "int", nullable: false),
-                    ThanhTien = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    GioVao = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    GioRa = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DonGia = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     DichVuID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

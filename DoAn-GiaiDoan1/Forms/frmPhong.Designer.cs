@@ -56,9 +56,9 @@
             IDPhong = new DataGridViewTextBoxColumn();
             TenPhong = new DataGridViewTextBoxColumn();
             GiaGio = new DataGridViewTextBoxColumn();
-            LoaiPhong = new DataGridViewTextBoxColumn();
+            TenLoaiPhong = new DataGridViewTextBoxColumn();
             TrangThai = new DataGridViewTextBoxColumn();
-            HinhAnh = new DataGridViewTextBoxColumn();
+            HinhAnh = new DataGridViewImageColumn();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             groupBox1.SuspendLayout();
@@ -83,7 +83,7 @@
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { IDPhong, TenPhong, GiaGio, LoaiPhong, TrangThai, HinhAnh });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { IDPhong, TenPhong, GiaGio, TenLoaiPhong, TrangThai, HinhAnh });
             dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.Location = new Point(3, 22);
             dataGridView1.MultiSelect = false;
@@ -383,11 +383,11 @@
             GiaGio.HeaderText = "Giá Giờ";
             GiaGio.Name = "GiaGio";
             // 
-            // LoaiPhong
+            // TenLoaiPhong
             // 
-            LoaiPhong.DataPropertyName = "LoaiPhong";
-            LoaiPhong.HeaderText = "Loại Phòng";
-            LoaiPhong.Name = "LoaiPhong";
+            TenLoaiPhong.DataPropertyName = "TenLoaiPhong";
+            TenLoaiPhong.HeaderText = "Loại Phòng";
+            TenLoaiPhong.Name = "TenLoaiPhong";
             // 
             // TrangThai
             // 
@@ -399,9 +399,9 @@
             // 
             HinhAnh.DataPropertyName = "HinhAnh";
             HinhAnh.HeaderText = "Hình Ảnh";
+            HinhAnh.ImageLayout = DataGridViewImageCellLayout.Stretch;
             HinhAnh.Name = "HinhAnh";
             HinhAnh.Resizable = DataGridViewTriState.True;
-            HinhAnh.SortMode = DataGridViewColumnSortMode.NotSortable;
             // 
             // frmPhong
             // 
@@ -456,8 +456,8 @@
         private DataGridViewTextBoxColumn IDPhong;
         private DataGridViewTextBoxColumn TenPhong;
         private DataGridViewTextBoxColumn GiaGio;
-        private DataGridViewTextBoxColumn LoaiPhong;
+        private DataGridViewTextBoxColumn TenLoaiPhong;
         private DataGridViewTextBoxColumn TrangThai;
-        private DataGridViewTextBoxColumn HinhAnh;
+        private DataGridViewImageColumn HinhAnh;
     }
 }

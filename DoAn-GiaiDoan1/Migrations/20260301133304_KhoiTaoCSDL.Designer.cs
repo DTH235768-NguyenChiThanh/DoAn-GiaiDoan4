@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DoAn_GiaiDoan1.Migrations
 {
     [DbContext(typeof(QLQKOKDbContext))]
-    [Migration("20260205122005_KhoiTaoCSDL")]
+    [Migration("20260301133304_KhoiTaoCSDL")]
     partial class KhoiTaoCSDL
     {
         /// <inheritdoc />
@@ -62,14 +62,17 @@ namespace DoAn_GiaiDoan1.Migrations
                     b.Property<int>("DichVuID")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("DonGia")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("GioRa")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("GioVao")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("HoaDonID")
                         .HasColumnType("int");
-
-                    b.Property<int>("SoLuong")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("ThanhTien")
-                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("ID");
 
@@ -151,12 +154,6 @@ namespace DoAn_GiaiDoan1.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<DateTime>("GioRa")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("GioVao")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("KHID")
                         .HasColumnType("int");
 
@@ -165,6 +162,9 @@ namespace DoAn_GiaiDoan1.Migrations
 
                     b.Property<int>("NVID")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("NgayLap")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("NhanVienID")
                         .HasColumnType("int");
@@ -307,7 +307,6 @@ namespace DoAn_GiaiDoan1.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TrangThai")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
