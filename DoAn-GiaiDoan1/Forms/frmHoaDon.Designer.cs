@@ -144,6 +144,7 @@
             btnSua.TabIndex = 9;
             btnSua.Text = "Sửa";
             btnSua.UseVisualStyleBackColor = true;
+            btnSua.Click += btnSua_Click;
             // 
             // btnXoa
             // 
@@ -154,6 +155,7 @@
             btnXoa.TabIndex = 10;
             btnXoa.Text = "Xoá";
             btnXoa.UseVisualStyleBackColor = true;
+            btnXoa.Click += btnXoa_Click;
             // 
             // btnTimKiem
             // 

@@ -38,7 +38,7 @@ namespace DoAn_GiaiDoan1.Forms
                 NVID = r.NVID,
                 HoVaTenNhanVien = r.NhanVien.TenNV,
                 NgayLap = r.NgayLap,
-                // TongTien = r.ChiTietHoaDon.Sum(r => (r.GioRa - r.GioVao) * r.DonGia),
+                //TongTien = r.ChiTietHoaDon.Sum(r => (r.GioRa - r.GioVao) * r.DonGia),
                 XemChiTiet = "Xem chi tiết"
             }).ToList();
             dataGridView1.DataSource = hd;
@@ -46,7 +46,34 @@ namespace DoAn_GiaiDoan1.Forms
 
         private void btnLapHoaDon_Click(object sender, EventArgs e)
         {
-            
+            using (frmChiTietHoaDon chiTiet = new frmChiTietHoaDon())
+            {
+                chiTiet.ShowDialog();
+            }
+        }
+
+        private void btnSua_Click(object sender, EventArgs e)
+        {
+            id = Convert.ToInt32(dataGridView1.CurrentRow.Cells["ID"].Value);
+            using (frmChiTietHoaDon chiTiet = new frmChiTietHoaDon(id))
+            {
+                chiTiet.ShowDialog();
+            }
+        }
+
+        private void btnXoa_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Xác nhận xóa hoá đơn?", "Xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                id = Convert.ToInt32(dataGridView1.CurrentRow.Cells["ID"].Value.ToString());
+                HoaDon hd = context.HoaDon.Find(id);
+                if (hd != null)
+                {
+                    context.HoaDon.Remove(hd);
+                }
+                context.SaveChanges();
+                frmHoaDon_Load(sender, e);
+            }
         }
     }
 }
